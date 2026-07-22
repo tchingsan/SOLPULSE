@@ -1,6 +1,6 @@
 # SOLPULSE V12.2
 
-> **Développement d’un système de trading algorithmique en Python sur la blockchain Solana, comprenant l’analyse de données de marché, l’automatisation des ordres, le suivi des performances et la gestion du risque via un dashboard interactif.**
+> **Système de trading algorithmique en Python sur la blockchain Solana, comprenant l’analyse de données de marché, l’automatisation des ordres, le suivi des performances et la gestion du risque via un dashboard interactif.**
 
 ## Présentation
 
