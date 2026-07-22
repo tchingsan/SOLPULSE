@@ -1,75 +1,112 @@
-# SOLPULSE STABLE PAPER PILOT V12.2
+# SOLPULSE V12.2
 
-V12.2 corrige le démarrage Windows.
+> **Développement d’un système de trading algorithmique en Python sur la blockchain Solana, comprenant l’analyse de données de marché, l’automatisation des ordres, le suivi des performances et la gestion du risque via un dashboard interactif.**
 
-## Erreur de conception supprimée
+## Présentation
 
-Dans V12 et V12.1, le lancement normal exécutait un achat synthétique dans une
-base temporaire. Windows pouvait conserver brièvement un handle sur ce fichier
-SQLite et produire `WinError 32`. Le lanceur arrêtait alors tout SOLPULSE, même
-si le véritable dashboard et les moteurs n’avaient aucun problème.
+**SOLPULSE** est une plateforme de trading algorithmique conçue pour détecter, analyser et simuler des opérations sur des tokens de l’écosystème Solana.
 
-V12.2 sépare définitivement les deux opérations :
+Le projet repose sur une architecture événementielle capable de surveiller les nouveaux lancements, d’évaluer les risques associés à chaque token et d’exécuter automatiquement des ordres dans un environnement de **paper trading**.
+
+L’objectif est de disposer d’une infrastructure complète permettant de tester, mesurer et améliorer une stratégie avant toute utilisation avec des fonds réels.
+
+---
+
+## Fonctionnalités principales
+
+### Détection en temps réel
+
+- Connexion WebSocket au réseau Solana
+- Détection des nouveaux tokens dès leur création
+- Décodage des événements on-chain
+- Suivi des bonding curves et des migrations vers les DEX
+- Identification immédiate des tokens utilisant le Mayhem Mode
+
+### Analyse de marché
+
+- Suivi du prix, de la liquidité et du volume
+- Analyse de la progression des bonding curves
+- Observation de l’activité d’achat et de vente
+- Classement dynamique des tokens selon leur proximité avec les conditions d’entrée
+- Collecte d’échantillons pour l’analyse historique et le backtesting
+
+### Safety Engine
+
+- Vérification des mint et freeze authorities
+- Analyse de la distribution des holders
+- Regroupement des comptes appartenant à un même wallet
+- Exclusion des pools de liquidité dans le calcul de concentration
+- Contrôle du plus gros holder hors pool
+- Exclusion automatique des tokens Mayhem
+- Blocage des actifs présentant un risque critique
+
+### Automatisation des ordres
+
+SOLPULSE dispose de deux modes d’entrée en paper trading :
+
+- **Paper Pilot** : entrée technique de `0,01 SOL` pour valider rapidement l’ensemble du pipeline
+- **Acquisition complète** : entrée de `0,05 SOL` après validation des contrôles de sécurité
+
+Le moteur garantit qu’une seule position peut être ouverte simultanément.
+
+### Gestion du risque
+
+- Stop-loss configurable
+- Take-profit automatique
+- Break-even dynamique
+- Durée maximale de détention
+- Limitation de l’exposition totale
+- Réserve minimale de capital
+- Fermeture automatique en cas de dégradation du niveau de sécurité
+
+### Suivi des performances
+
+- Capital disponible et valeur totale du portefeuille
+- PnL réalisé et latent
+- Taux de réussite
+- Historique des positions
+- Historique des ordres simulés
+- Courbe d’équité
+- Mesure du drawdown
+- Replay des événements et backtesting
+
+---
+
+## Dashboard interactif
+
+L’interface Streamlit centralise les principales informations du système :
+
+- état des moteurs en temps réel ;
+- tokens récemment détectés ;
+- classement des opportunités ;
+- résultats des analyses de sécurité ;
+- positions ouvertes ;
+- historique des transactions ;
+- performances du portefeuille ;
+- diagnostics techniques ;
+- erreurs RPC et limitations des fournisseurs de données.
+
+Le dashboard a été conçu pour rendre le fonctionnement du système compréhensible sans avoir à consulter directement les journaux ou la base de données.
+
+---
+
+## Architecture technique
 
 ```text
-Démarrage normal
-→ contrôles rapides non destructifs
-→ moteurs
-→ dashboard
-
-Test d’achat manuel
-→ base distincte dans data\diagnostics
-→ aucun accès à la vraie base
-→ aucun nettoyage immédiat du fichier SQLite
-```
-
-Le test synthétique ne peut plus empêcher SOLPULSE de démarrer.
-
-## Lancer SOLPULSE
-
-```text
-01_START_SOLPULSE_STABLE_V12_2.bat
-```
-
-Dashboard :
-
-```text
-http://localhost:8527/?version=STABLE-PAPER-PILOT-V12-2
-```
-
-Le port 8527 évite les conflits avec les anciennes fenêtres V12/V12.1.
-
-## Tester séparément l’achat paper
-
-Fermer d’abord SOLPULSE, puis lancer :
-
-```text
-06_TESTER_ACHAT_PAPER_V12_2.bat
-```
-
-Le test crée une base indépendante dans :
-
-```text
-data\diagnostics
-```
-
-Il ne modifie jamais `data\trading.db` et conserve volontairement son fichier
-de test afin d’éviter le verrouillage de suppression propre à Windows.
-
-## Importer l’historique
-
-1. Fermer toutes les anciennes versions.
-2. Lancer `03_IMPORTER_BASE_PRECEDENTE.bat`.
-3. Sélectionner la base de V12.1 ou de la version précédente.
-4. Lancer `01_START_SOLPULSE_STABLE_V12_2.bat`.
-
-Ne pas lancer `02_REINITIALISER_1_SOL.bat` pour conserver l’historique.
-
-## Fonctionnement paper
-
-- Paper Pilot : 0,01 SOL après le délai de validation événementielle ;
-- acquisition complète : 0,05 SOL après Safety complet ;
-- une seule position simultanée ;
-- Mayhem toujours interdit ;
-- aucune transaction réelle ;
-- aucune clé privée requise.
+Solana WebSocket / Pump Events
+              ↓
+       New Coin Radar
+              ↓
+      Market Data Engine
+              ↓
+         Safety Engine
+              ↓
+    Qualification Pipeline
+              ↓
+     Paper Trading Engine
+              ↓
+    Portfolio & Risk Manager
+              ↓
+   SQLite / Replay / Backtest
+              ↓
+     Dashboard Streamlit
