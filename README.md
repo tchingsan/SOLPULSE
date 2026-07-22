@@ -6,7 +6,7 @@
 
 **SOLPULSE** est une plateforme de trading algorithmique conçue pour détecter, analyser et simuler des opérations sur des tokens de l’écosystème Solana.
 
-Le projet repose sur une architecture événementielle capable de surveiller les nouveaux lancements, d’évaluer les risques associés à chaque token et d’exécuter automatiquement des ordres dans un environnement de **paper trading**.
+Le projet repose sur une architecture événementielle capable de surveiller les nouveaux lancements, d’évaluer les risques associés à chaque token et d’exécuter automatiquement des ordres sur la blockchain Solana.
 
 L’objectif est de disposer d’une infrastructure complète permettant de tester, mesurer et améliorer une stratégie avant toute utilisation avec des fonds réels.
 
