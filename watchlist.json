@@ -1,0 +1,25 @@
+{
+  "chain": "solana",
+  "tokens": [
+    {
+      "address": "6Lg8hJABEbBWHCgK7wSDp3eqUAwBvghTdeuHH3vzpump",
+      "label": "COIN 1"
+    },
+    {
+      "address": "2aUihwqhsdWyCEk7zhLTerTPTzeVUt2uGv6BEXL6pump",
+      "label": "COIN 2"
+    },
+    {
+      "address": "JCk23GUCHgXejYSnAw9kSMGuxC7jkFFbXjZdZLFipump",
+      "label": "COIN 3"
+    },
+    {
+      "address": "D4QYDUW4AEbLS2Qz22iHuSKsT7X5QhKm25a5YYFejr8z",
+      "label": "COIN 4"
+    },
+    {
+      "address": "FMqh9mqR6drPZqqW6wPqLHxX4rqNDWGhYLaMfoaJpump",
+      "label": "COIN 5"
+    }
+  ]
+}

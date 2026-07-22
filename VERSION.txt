@@ -1,0 +1,11 @@
+SOLPULSE STABLE PAPER PILOT V12.2
+Port : 8527
+Correctif : le test synthétique ne bloque plus le démarrage
+Diagnostic startup : non bloquant
+Test achat paper : manuel et isolé
+Base de test : data\diagnostics
+Base réelle : data\trading.db
+Paper Pilot : 0.01 SOL
+Acquisition complète : 0.05 SOL
+Mayhem : interdit
+Transactions réelles : désactivées
